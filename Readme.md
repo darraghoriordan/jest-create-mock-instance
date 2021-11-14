@@ -1,33 +1,40 @@
+## NOTE: TEMPORARY FORKED VERSION FOR JEST 27+
+
+This is a temporary fork of this library that allows it to work with Jest 27 and above. Please only use this until the maintainer of the original (https://github.com/asvetliakov/jest-create-mock-instance) gets a chance to merge a PR that patches their version. This will prevent fragmentation.
+
+You can track the PR to fix this in the original repo from gustavohenke here: https://github.com/asvetliakov/jest-create-mock-instance/pull/27
+
 ## Description
 
-This library uses ```jest-mock``` internal package to automatically create & instantiate mock for given class/function constructor.
+This library uses `jest-mock` internal package to automatically create & instantiate mock for given class/function constructor.
 
-I've been always fan of using ```sinon.createStubInstance()``` in my tests. Unfortunately, Jest doesn't expose similar API to create new mocked instance for given class constructor. Using ```jest.fn()``` or jest's module mocks is not very convienment for various cases, take an example of these classes and unit test:
-
+I've been always fan of using `sinon.createStubInstance()` in my tests. Unfortunately, Jest doesn't expose similar API to create new mocked instance for given class constructor. Using `jest.fn()` or jest's module mocks is not very convienment for various cases, take an example of these classes and unit test:
 
 food.js
+
 ```js
 export class Food {
-    consume() {}
+  consume() {}
 }
-
 ```
 
 cat.js
+
 ```js
 export class Cat {
-    constructor(food) {
-        this.food = food;
-    }
-    eat() {
-        this.food.consume();
-    }
+  constructor(food) {
+    this.food = food;
+  }
+  eat() {
+    this.food.consume();
+  }
 }
 ```
 
 and test:
 
 cat.spec.js
+
 ```js
 import { Food } from "../food";
 import { Cat } from "../cat";
@@ -35,25 +42,25 @@ import { Cat } from "../cat";
 let cat;
 let food;
 beforeEach(() => {
-    food = new Food();
-    cat = new Cat(food);
+  food = new Food();
+  cat = new Cat(food);
 });
 
 it("Must eat", () => {
-    cat.eat();
-    expect(food.consume).toBeCalled();
+  cat.eat();
+  expect(food.consume).toBeCalled();
 });
 ```
 
-By using jest module mocks you must mock your module before and instantiate ```Food``` directly:
+By using jest module mocks you must mock your module before and instantiate `Food` directly:
 
 ```js
 jest.mock("../food");
 import { Food } from "../food";
 
 beforeEach(() => {
-    food = new Food();
-})
+  food = new Food();
+});
 ```
 
 This is very ugly when have many modules to mock (and you don't want automock by default) and when using typescript:
@@ -70,10 +77,10 @@ let food1: jest.Mocked<Food1>;
 let food2: jest.Mocked<Food2>;
 let food3: jest.Mocked<Food3>;
 beforeEach(() => {
-    // Food constructors may have other required parameters so often necessary cast them to any
-    food1 = new (Food1 as any)() as any;
-    food2 = new (Food2 as any)() as any;
-    food3 = new (Food3 as any)() as any;
+  // Food constructors may have other required parameters so often necessary cast them to any
+  food1 = new (Food1 as any)() as any;
+  food2 = new (Food2 as any)() as any;
+  food3 = new (Food3 as any)() as any;
 });
 ```
 
@@ -85,15 +92,14 @@ import { Food } from "../food";
 
 let food: jest.Mocked<Food>;
 beforeEach(() => {
-    food = createMockInstance(Food);
+  food = createMockInstance(Food);
 });
 ```
 
-
 ## Install
 
-```npm install jest-create-mock-instance --save-dev```
+`npm install jest-create-mock-instance --save-dev`
 
 ## Typescript
 
-```createMockInstance``` returns ```jest.Mocked<T>``` object. Don't forget to install ```@types/jest``` package.
+`createMockInstance` returns `jest.Mocked<T>` object. Don't forget to install `@types/jest` package.
