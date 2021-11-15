@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: jest-create-mock-instance
+  description: A locally forked version of this library that also supports Jest 27
+  annotations:
+    github.com/project-slug: darraghoriordan/jest-create-mock-instance
+    github.com/user-login: darraghoriordan
+  tags:
+    - javascript
+  links:
+    - url: https://github.com/asvetliakov/jest-create-mock-instance
+      title: Forked from
+      icon: dashboard
+spec:
+  type: library
+  lifecycle: production
+  owner: darraghoriordan
