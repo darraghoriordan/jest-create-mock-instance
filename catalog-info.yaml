@@ -11,7 +11,7 @@ metadata:
   links:
     - url: https://github.com/asvetliakov/jest-create-mock-instance
       title: Forked from
-      icon: dashboard
+      icon: CallSplit
 spec:
   type: library
   lifecycle: production
